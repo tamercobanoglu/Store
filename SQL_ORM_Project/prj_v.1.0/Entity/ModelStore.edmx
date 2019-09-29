@@ -1,0 +1,828 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cate">
+          <Key>
+            <PropertyRef Name="cateID" />
+          </Key>
+          <Property Name="cateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cateName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="cityID" />
+          </Key>
+          <Property Name="cityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cityName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cUserName" Type="nvarchar(max)" />
+          <Property Name="cUserPassword" Type="nvarchar(max)" />
+          <Property Name="cFirstName" Type="nvarchar(max)" />
+          <Property Name="cLastName" Type="nvarchar(max)" />
+          <Property Name="phone" Type="nvarchar(max)" />
+          <Property Name="creditLimit" Type="float" />
+          <Property Name="addressLine" Type="nvarchar(max)" />
+          <Property Name="region" Type="nvarchar(max)" />
+          <Property Name="city" Type="nvarchar(max)" />
+          <Property Name="country" Type="nvarchar(max)" />
+          <Property Name="postalCode" Type="nvarchar(max)" />
+          <Property Name="signinID" Type="int" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="employeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="eUserName" Type="nvarchar(max)" />
+          <Property Name="eUserPassword" Type="nvarchar(max)" />
+          <Property Name="eFirstName" Type="nvarchar(max)" />
+          <Property Name="eLastName" Type="nvarchar(max)" />
+          <Property Name="email" Type="nvarchar(max)" />
+          <Property Name="officeCode" Type="int" />
+          <Property Name="jobTitle" Type="nvarchar(max)" />
+          <Property Name="signinID" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="orderDetailID" />
+          </Key>
+          <Property Name="orderDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productID" Type="int" />
+          <Property Name="priceEach" Type="float" />
+          <Property Name="quantityOrdered" Type="int" />
+          <Property Name="orderID" Type="int" />
+          <Property Name="employeeID" Type="int" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="orderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="orderDate" Type="date" />
+          <Property Name="orderStatus" Type="nvarchar(max)" />
+          <Property Name="amount" Type="float" />
+          <Property Name="customerID" Type="int" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="paymentID" />
+          </Key>
+          <Property Name="paymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="paymentDate" Type="date" />
+          <Property Name="amountPayed" Type="float" />
+          <Property Name="customerID" Type="int" />
+          <Property Name="orderID" Type="int" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="proName" Type="nvarchar(max)" />
+          <Property Name="proPrice" Type="float" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="subCateID" Type="int" />
+          <Property Name="cateID" Type="int" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="regionID" />
+          </Key>
+          <Property Name="regionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="regionName" Type="nvarchar(max)" />
+          <Property Name="postalCode" Type="nvarchar(max)" />
+          <Property Name="cityID" Type="int" />
+        </EntityType>
+        <EntityType Name="Signin">
+          <Key>
+            <PropertyRef Name="signinID" />
+          </Key>
+          <Property Name="signinID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="nvarchar(max)" />
+          <Property Name="userPassword" Type="nvarchar(max)" />
+          <Property Name="userType" Type="int" />
+        </EntityType>
+        <EntityType Name="SubCate">
+          <Key>
+            <PropertyRef Name="subCateID" />
+          </Key>
+          <Property Name="subCateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subCateName" Type="nvarchar(max)" />
+          <Property Name="cateID" Type="int" />
+        </EntityType>
+        <Association Name="FK__Customers__signi__4E88ABD4">
+          <End Role="Signin" Type="Self.Signin" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Signin">
+              <PropertyRef Name="signinID" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="signinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__signi__4BAC3F29">
+          <End Role="Signin" Type="Self.Signin" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Signin">
+              <PropertyRef Name="signinID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="signinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__emplo__5EBF139D">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="employeeID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__order__5DCAEF64">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__produ__5CD6CB2B">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__customer__59FA5E80">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__custome__619B8048">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__orderID__628FA481">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orderID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__cateID__571DF1D5">
+          <End Role="Cate" Type="Self.Cate" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cate">
+              <PropertyRef Name="cateID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="cateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__subCat__5629CD9C">
+          <End Role="SubCate" Type="Self.SubCate" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCate">
+              <PropertyRef Name="subCateID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="subCateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Region__cityID__6754599E">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Region" Type="Self.Region" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="cityID" />
+            </Principal>
+            <Dependent Role="Region">
+              <PropertyRef Name="cityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubCate__cateID__534D60F1">
+          <End Role="Cate" Type="Self.Cate" Multiplicity="0..1" />
+          <End Role="SubCate" Type="Self.SubCate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cate">
+              <PropertyRef Name="cateID" />
+            </Principal>
+            <Dependent Role="SubCate">
+              <PropertyRef Name="cateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StoreModelStoreContainer">
+          <EntitySet Name="Cate" EntityType="Self.Cate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Signin" EntityType="Self.Signin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCate" EntityType="Self.SubCate" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Customers__signi__4E88ABD4" Association="Self.FK__Customers__signi__4E88ABD4">
+            <End Role="Signin" EntitySet="Signin" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__signi__4BAC3F29" Association="Self.FK__Employees__signi__4BAC3F29">
+            <End Role="Signin" EntitySet="Signin" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__emplo__5EBF139D" Association="Self.FK__OrderDeta__emplo__5EBF139D">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__order__5DCAEF64" Association="Self.FK__OrderDeta__order__5DCAEF64">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__produ__5CD6CB2B" Association="Self.FK__OrderDeta__produ__5CD6CB2B">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__customer__59FA5E80" Association="Self.FK__Orders__customer__59FA5E80">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__custome__619B8048" Association="Self.FK__Payment__custome__619B8048">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__orderID__628FA481" Association="Self.FK__Payment__orderID__628FA481">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__cateID__571DF1D5" Association="Self.FK__Products__cateID__571DF1D5">
+            <End Role="Cate" EntitySet="Cate" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__subCat__5629CD9C" Association="Self.FK__Products__subCat__5629CD9C">
+            <End Role="SubCate" EntitySet="SubCate" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Region__cityID__6754599E" Association="Self.FK__Region__cityID__6754599E">
+            <End Role="City" EntitySet="City" />
+            <End Role="Region" EntitySet="Region" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubCate__cateID__534D60F1" Association="Self.FK__SubCate__cateID__534D60F1">
+            <End Role="Cate" EntitySet="Cate" />
+            <End Role="SubCate" EntitySet="SubCate" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="StoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cate" EntityType="StoreModel.Cate" />
+          <EntitySet Name="City" EntityType="StoreModel.City" />
+          <EntitySet Name="Customers" EntityType="StoreModel.Customers" />
+          <EntitySet Name="Employees" EntityType="StoreModel.Employees" />
+          <EntitySet Name="OrderDetails" EntityType="StoreModel.OrderDetails" />
+          <EntitySet Name="Orders" EntityType="StoreModel.Orders" />
+          <EntitySet Name="Payment" EntityType="StoreModel.Payment" />
+          <EntitySet Name="Products" EntityType="StoreModel.Products" />
+          <EntitySet Name="Region" EntityType="StoreModel.Region" />
+          <EntitySet Name="Signin" EntityType="StoreModel.Signin" />
+          <EntitySet Name="SubCate" EntityType="StoreModel.SubCate" />
+          <AssociationSet Name="FK__Products__cateID__571DF1D5" Association="StoreModel.FK__Products__cateID__571DF1D5">
+            <End Role="Cate" EntitySet="Cate" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubCate__cateID__534D60F1" Association="StoreModel.FK__SubCate__cateID__534D60F1">
+            <End Role="Cate" EntitySet="Cate" />
+            <End Role="SubCate" EntitySet="SubCate" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Region__cityID__6754599E" Association="StoreModel.FK__Region__cityID__6754599E">
+            <End Role="City" EntitySet="City" />
+            <End Role="Region" EntitySet="Region" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customers__signi__4E88ABD4" Association="StoreModel.FK__Customers__signi__4E88ABD4">
+            <End Role="Signin" EntitySet="Signin" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__customer__59FA5E80" Association="StoreModel.FK__Orders__customer__59FA5E80">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__custome__619B8048" Association="StoreModel.FK__Payment__custome__619B8048">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__signi__4BAC3F29" Association="StoreModel.FK__Employees__signi__4BAC3F29">
+            <End Role="Signin" EntitySet="Signin" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__emplo__5EBF139D" Association="StoreModel.FK__OrderDeta__emplo__5EBF139D">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__order__5DCAEF64" Association="StoreModel.FK__OrderDeta__order__5DCAEF64">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__produ__5CD6CB2B" Association="StoreModel.FK__OrderDeta__produ__5CD6CB2B">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__orderID__628FA481" Association="StoreModel.FK__Payment__orderID__628FA481">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__subCat__5629CD9C" Association="StoreModel.FK__Products__subCat__5629CD9C">
+            <End Role="SubCate" EntitySet="SubCate" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Cate">
+          <Key>
+            <PropertyRef Name="cateID" />
+          </Key>
+          <Property Name="cateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cateName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="StoreModel.FK__Products__cateID__571DF1D5" FromRole="Cate" ToRole="Products" />
+          <NavigationProperty Name="SubCate" Relationship="StoreModel.FK__SubCate__cateID__534D60F1" FromRole="Cate" ToRole="SubCate" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="cityID" />
+          </Key>
+          <Property Name="cityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cityName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Region" Relationship="StoreModel.FK__Region__cityID__6754599E" FromRole="City" ToRole="Region" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cUserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cUserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="creditLimit" Type="Double" />
+          <Property Name="addressLine" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="region" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="postalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="signinID" Type="Int32" />
+          <NavigationProperty Name="Signin" Relationship="StoreModel.FK__Customers__signi__4E88ABD4" FromRole="Customers" ToRole="Signin" />
+          <NavigationProperty Name="Orders" Relationship="StoreModel.FK__Orders__customer__59FA5E80" FromRole="Customers" ToRole="Orders" />
+          <NavigationProperty Name="Payment" Relationship="StoreModel.FK__Payment__custome__619B8048" FromRole="Customers" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="employeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eUserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eUserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="officeCode" Type="Int32" />
+          <Property Name="jobTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="signinID" Type="Int32" />
+          <NavigationProperty Name="Signin" Relationship="StoreModel.FK__Employees__signi__4BAC3F29" FromRole="Employees" ToRole="Signin" />
+          <NavigationProperty Name="OrderDetails" Relationship="StoreModel.FK__OrderDeta__emplo__5EBF139D" FromRole="Employees" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="orderDetailID" />
+          </Key>
+          <Property Name="orderDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="priceEach" Type="Double" />
+          <Property Name="quantityOrdered" Type="Int32" />
+          <Property Name="orderID" Type="Int32" />
+          <Property Name="employeeID" Type="Int32" />
+          <NavigationProperty Name="Employees" Relationship="StoreModel.FK__OrderDeta__emplo__5EBF139D" FromRole="OrderDetails" ToRole="Employees" />
+          <NavigationProperty Name="Orders" Relationship="StoreModel.FK__OrderDeta__order__5DCAEF64" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="Products" Relationship="StoreModel.FK__OrderDeta__produ__5CD6CB2B" FromRole="OrderDetails" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="orderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orderDate" Type="DateTime" Precision="0" />
+          <Property Name="orderStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="amount" Type="Double" />
+          <Property Name="customerID" Type="Int32" />
+          <NavigationProperty Name="Customers" Relationship="StoreModel.FK__Orders__customer__59FA5E80" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="OrderDetails" Relationship="StoreModel.FK__OrderDeta__order__5DCAEF64" FromRole="Orders" ToRole="OrderDetails" />
+          <NavigationProperty Name="Payment" Relationship="StoreModel.FK__Payment__orderID__628FA481" FromRole="Orders" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="paymentID" />
+          </Key>
+          <Property Name="paymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="paymentDate" Type="DateTime" Precision="0" />
+          <Property Name="amountPayed" Type="Double" />
+          <Property Name="customerID" Type="Int32" />
+          <Property Name="orderID" Type="Int32" />
+          <NavigationProperty Name="Customers" Relationship="StoreModel.FK__Payment__custome__619B8048" FromRole="Payment" ToRole="Customers" />
+          <NavigationProperty Name="Orders" Relationship="StoreModel.FK__Payment__orderID__628FA481" FromRole="Payment" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="proPrice" Type="Double" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="subCateID" Type="Int32" />
+          <Property Name="cateID" Type="Int32" />
+          <NavigationProperty Name="Cate" Relationship="StoreModel.FK__Products__cateID__571DF1D5" FromRole="Products" ToRole="Cate" />
+          <NavigationProperty Name="OrderDetails" Relationship="StoreModel.FK__OrderDeta__produ__5CD6CB2B" FromRole="Products" ToRole="OrderDetails" />
+          <NavigationProperty Name="SubCate" Relationship="StoreModel.FK__Products__subCat__5629CD9C" FromRole="Products" ToRole="SubCate" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="regionID" />
+          </Key>
+          <Property Name="regionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="regionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="postalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cityID" Type="Int32" />
+          <NavigationProperty Name="City" Relationship="StoreModel.FK__Region__cityID__6754599E" FromRole="Region" ToRole="City" />
+        </EntityType>
+        <EntityType Name="Signin">
+          <Key>
+            <PropertyRef Name="signinID" />
+          </Key>
+          <Property Name="signinID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="userPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="userType" Type="Int32" />
+          <NavigationProperty Name="Customers" Relationship="StoreModel.FK__Customers__signi__4E88ABD4" FromRole="Signin" ToRole="Customers" />
+          <NavigationProperty Name="Employees" Relationship="StoreModel.FK__Employees__signi__4BAC3F29" FromRole="Signin" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="SubCate">
+          <Key>
+            <PropertyRef Name="subCateID" />
+          </Key>
+          <Property Name="subCateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subCateName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cateID" Type="Int32" />
+          <NavigationProperty Name="Cate" Relationship="StoreModel.FK__SubCate__cateID__534D60F1" FromRole="SubCate" ToRole="Cate" />
+          <NavigationProperty Name="Products" Relationship="StoreModel.FK__Products__subCat__5629CD9C" FromRole="SubCate" ToRole="Products" />
+        </EntityType>
+        <Association Name="FK__Products__cateID__571DF1D5">
+          <End Type="StoreModel.Cate" Role="Cate" Multiplicity="0..1" />
+          <End Type="StoreModel.Products" Role="Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cate">
+              <PropertyRef Name="cateID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="cateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubCate__cateID__534D60F1">
+          <End Type="StoreModel.Cate" Role="Cate" Multiplicity="0..1" />
+          <End Type="StoreModel.SubCate" Role="SubCate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cate">
+              <PropertyRef Name="cateID" />
+            </Principal>
+            <Dependent Role="SubCate">
+              <PropertyRef Name="cateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Region__cityID__6754599E">
+          <End Type="StoreModel.City" Role="City" Multiplicity="0..1" />
+          <End Type="StoreModel.Region" Role="Region" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="cityID" />
+            </Principal>
+            <Dependent Role="Region">
+              <PropertyRef Name="cityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customers__signi__4E88ABD4">
+          <End Type="StoreModel.Signin" Role="Signin" Multiplicity="0..1" />
+          <End Type="StoreModel.Customers" Role="Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Signin">
+              <PropertyRef Name="signinID" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="signinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__customer__59FA5E80">
+          <End Type="StoreModel.Customers" Role="Customers" Multiplicity="0..1" />
+          <End Type="StoreModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__custome__619B8048">
+          <End Type="StoreModel.Customers" Role="Customers" Multiplicity="0..1" />
+          <End Type="StoreModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__signi__4BAC3F29">
+          <End Type="StoreModel.Signin" Role="Signin" Multiplicity="0..1" />
+          <End Type="StoreModel.Employees" Role="Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Signin">
+              <PropertyRef Name="signinID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="signinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__emplo__5EBF139D">
+          <End Type="StoreModel.Employees" Role="Employees" Multiplicity="0..1" />
+          <End Type="StoreModel.OrderDetails" Role="OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="employeeID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__order__5DCAEF64">
+          <End Type="StoreModel.Orders" Role="Orders" Multiplicity="0..1" />
+          <End Type="StoreModel.OrderDetails" Role="OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__produ__5CD6CB2B">
+          <End Type="StoreModel.Products" Role="Products" Multiplicity="0..1" />
+          <End Type="StoreModel.OrderDetails" Role="OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__orderID__628FA481">
+          <End Type="StoreModel.Orders" Role="Orders" Multiplicity="0..1" />
+          <End Type="StoreModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orderID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__subCat__5629CD9C">
+          <End Type="StoreModel.SubCate" Role="SubCate" Multiplicity="0..1" />
+          <End Type="StoreModel.Products" Role="Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCate">
+              <PropertyRef Name="subCateID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="subCateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StoreModelStoreContainer" CdmEntityContainer="StoreEntities">
+          <EntitySetMapping Name="Cate">
+            <EntityTypeMapping TypeName="StoreModel.Cate">
+              <MappingFragment StoreEntitySet="Cate">
+                <ScalarProperty Name="cateName" ColumnName="cateName" />
+                <ScalarProperty Name="cateID" ColumnName="cateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="City">
+            <EntityTypeMapping TypeName="StoreModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="cityName" ColumnName="cityName" />
+                <ScalarProperty Name="cityID" ColumnName="cityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="StoreModel.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="signinID" ColumnName="signinID" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="region" ColumnName="region" />
+                <ScalarProperty Name="addressLine" ColumnName="addressLine" />
+                <ScalarProperty Name="creditLimit" ColumnName="creditLimit" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="cLastName" ColumnName="cLastName" />
+                <ScalarProperty Name="cFirstName" ColumnName="cFirstName" />
+                <ScalarProperty Name="cUserPassword" ColumnName="cUserPassword" />
+                <ScalarProperty Name="cUserName" ColumnName="cUserName" />
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="StoreModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="signinID" ColumnName="signinID" />
+                <ScalarProperty Name="jobTitle" ColumnName="jobTitle" />
+                <ScalarProperty Name="officeCode" ColumnName="officeCode" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="eLastName" ColumnName="eLastName" />
+                <ScalarProperty Name="eFirstName" ColumnName="eFirstName" />
+                <ScalarProperty Name="eUserPassword" ColumnName="eUserPassword" />
+                <ScalarProperty Name="eUserName" ColumnName="eUserName" />
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="StoreModel.OrderDetails">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+                <ScalarProperty Name="quantityOrdered" ColumnName="quantityOrdered" />
+                <ScalarProperty Name="priceEach" ColumnName="priceEach" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="orderDetailID" ColumnName="orderDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="StoreModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="orderStatus" ColumnName="orderStatus" />
+                <ScalarProperty Name="orderDate" ColumnName="orderDate" />
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment">
+            <EntityTypeMapping TypeName="StoreModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="amountPayed" ColumnName="amountPayed" />
+                <ScalarProperty Name="paymentDate" ColumnName="paymentDate" />
+                <ScalarProperty Name="paymentID" ColumnName="paymentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="StoreModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="cateID" ColumnName="cateID" />
+                <ScalarProperty Name="subCateID" ColumnName="subCateID" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="proPrice" ColumnName="proPrice" />
+                <ScalarProperty Name="proName" ColumnName="proName" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Region">
+            <EntityTypeMapping TypeName="StoreModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="cityID" ColumnName="cityID" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+                <ScalarProperty Name="regionName" ColumnName="regionName" />
+                <ScalarProperty Name="regionID" ColumnName="regionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Signin">
+            <EntityTypeMapping TypeName="StoreModel.Signin">
+              <MappingFragment StoreEntitySet="Signin">
+                <ScalarProperty Name="userType" ColumnName="userType" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="signinID" ColumnName="signinID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCate">
+            <EntityTypeMapping TypeName="StoreModel.SubCate">
+              <MappingFragment StoreEntitySet="SubCate">
+                <ScalarProperty Name="cateID" ColumnName="cateID" />
+                <ScalarProperty Name="subCateName" ColumnName="subCateName" />
+                <ScalarProperty Name="subCateID" ColumnName="subCateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
